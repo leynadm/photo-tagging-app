@@ -1,0 +1,14 @@
+.game-wrapper{
+    text-align: center;
+    height: calc(100vh - 10vh);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-family: 'Lato', sans-serif;
+}
+
+.area-border{
+    border: 3px solid red;
+    outline-color: white;
+}

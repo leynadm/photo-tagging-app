@@ -1,0 +1,13 @@
+
+
+.menu-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: center;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.level-image{
+    width: 25rem;
+}
