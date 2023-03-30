@@ -1,4 +1,5 @@
 .game-wrapper{
+    position: absolute;
     text-align: center;
     height: calc(100vh - 10vh);
     position: absolute;
@@ -11,4 +12,17 @@
 .area-border{
     border: 3px solid red;
     outline-color: white;
+}
+
+img{
+    width: 100%;
+}
+
+.user-selection {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem;
 }
