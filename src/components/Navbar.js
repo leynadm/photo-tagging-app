@@ -1,8 +1,10 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Navbar.css";
+import Timer from "./Timer";
 
-function Navbar() {
+function Navbar({gameLoaded}) {
+  
   const navRef = useRef();
 
   const showNavbar = () => {
@@ -11,20 +13,12 @@ function Navbar() {
 
   return (
     <div>
-         <header>
+      <header>
         <nav ref={navRef}>
-          <Link to="/">
-            Home
-          </Link>
-          <Link to="about">
-            About
-          </Link>
-          <button className="nav-btn nav-close-btn" onClick={showNavbar}>
-          </button>
-          </nav>        
-        <button className="nav-btn" onClick={showNavbar}>
-        </button>
-
+          <Link to="/">Home</Link>
+          <Link to="about">About</Link>
+        </nav>
+        <div>{gameLoaded && <Timer start={true}/>}</div>
       </header>
     </div>
   );

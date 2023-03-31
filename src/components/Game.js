@@ -3,25 +3,36 @@ import imgLevel01 from "../images/level-01.jpg";
 import "../styles/Game.css";
 import Dropdown from "./Dropdown";
 import firebase from "../config/firebase";
-import { app, db } from "../config/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { db } from "../config/firebase";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  doc,
+  getDoc,
+} from "firebase/firestore";
+
 import imageMapResizerMin from "image-map-resizer";
 
-function Game() {
+function Game({setGameLoaded}) {
+
   const [dropdownVisibility, setDropdownVisibility] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ x: 0, y: 0 });
   const [zWarriorId, setzWarriorId] = useState("");
-  const [selectionResult, setSelectionResult] = useState("");
+  const [selectionResultCorrect, setSelectionResultCorrect] =
+    useState("no-selection");
+  const [selectionResultIncorrect, setSelectionResultIncorrect] =
+    useState("no-selection");
 
-  /* 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getDocs(collection(db, "coordinates"));
-      console.log("Firestore data:", data.docs.map((doc) => doc.data()));
-    };
-    fetchData();
-  }, [db]);
- */
+    useEffect(() => {
+      setGameLoaded(true);
+    }, []);
+
+    useEffect(() => {
+      return () => {
+        setGameLoaded(false);
+      }
+    }, []);
 
   useEffect(() => {
     import("image-map-resizer").then((module) => module.default());
@@ -43,10 +54,48 @@ function Game() {
     setDropdownVisibility(true);
   };
 
+  async function submitData(selectedValue, zWarriorId) {
+    const pullDocRef = doc(db, "coordinates", selectedValue);
+    const docSnap = await getDoc(pullDocRef);
+
+    if (docSnap.exists()) {
+      if (docSnap.data().id === zWarriorId) {
+        setSelectionResultCorrect("user-selection-correct");
+      } else {
+        setSelectionResultIncorrect("user-selection-incorrect");
+      }
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+
+    const docRef = await addDoc(collection(db, "user-selection"), {
+      value: selectedValue,
+      coords: zWarriorId,
+      createdAt: serverTimestamp(),
+    });
+
+    setTimeout(() => {
+      setSelectionResultCorrect("no-selection");
+      setSelectionResultIncorrect("no-selection");
+    }, 3000);
+  }
+
   return (
     <div className="game-wrapper">
-      <div className="user-selection correct">Correct!</div>
-      <div className="user-selection wrong">Try again!</div>
+      
+      <div className={selectionResultCorrect}>
+        Correct!
+        <span className="material-symbols-outlined selection-icon">
+          verified
+        </span>
+      </div>
+      <div className={selectionResultIncorrect}>
+        Try again!
+        <span className="material-symbols-outlined selection-icon">
+          dangerous
+        </span>
+      </div>
 
       <img
         className="game-image"
@@ -206,10 +255,9 @@ function Game() {
         <Dropdown
           clickPosition={dropdownPosition}
           zWarriorId={zWarriorId}
-          selectionResult={selectionResult}
+          submitData={submitData}
         />
       )}
-
     </div>
   );
 }

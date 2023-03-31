@@ -1,46 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Dropdown.css";
-import firebase from "../config/firebase";
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  getDocs,
-  doc,
-  getDoc,
-} from "firebase/firestore";
-import { async } from "@firebase/util";
-import { db } from "../config/firebase";
 
-const Dropdown = ({ clickPosition, zWarriorId }) => {
+const Dropdown = ({ clickPosition, zWarriorId,submitData }) => {
+
   const style = {
     position: "absolute",
     left: `${clickPosition.x}px`,
     top: `${clickPosition.y}px`,
   };
 
-  async function submitData(selectedValue, zWarriorId) {
-    const pullDocRef = doc(db, "coordinates", selectedValue);
-    const docSnap = await getDoc(pullDocRef);
-
-    if (docSnap.exists()) {
-
-      if (docSnap.data().id === zWarriorId) {
-        console.log("selection was correct");
-      } else {
-        console.log("selection was incorrect");
-      }
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
-    }
-
-    const docRef = await addDoc(collection(db, "user-selection"), {
-      value: selectedValue,
-      coords: zWarriorId,
-      createdAt: serverTimestamp()
-    });
-  }
+  const [randomWarriors,setRandomWarrios] = useState([{warrior:"songoku",name:"Son Goku"},{warrior:"kingcold",name:"King Cold"},{warrior:"Saibaman",name:"Saiba Man #1"}])
 
   return (
     <div style={style} className="dropdown">
@@ -48,25 +17,25 @@ const Dropdown = ({ clickPosition, zWarriorId }) => {
         <li>
           <button
             type="button"
-            onClick={() => submitData("songoku", zWarriorId)}
+            onClick={() => submitData(randomWarriors[0].warrior, zWarriorId)}
           >
-            Son Goku
+            {randomWarriors[0].name}
           </button>
         </li>
         <li>
           <button
             type="button"
-            onClick={() => submitData("kingcold", zWarriorId)}
+            onClick={() => submitData(randomWarriors[1].warrior, zWarriorId)}
           >
-            King Cold
+            {randomWarriors[1].name}
           </button>
         </li>
         <li>
           <button
             type="button"
-            onClick={() => submitData("saibaman", zWarriorId)}
+            onClick={() => submitData(randomWarriors[2].warrior, zWarriorId)}
           >
-            Saibaman
+            {randomWarriors[2].name}
           </button>
         </li>
       </ul>
