@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
+import "../styles/Timer.css";
 
-function Timer({ start }) {
-  const [seconds, setSeconds] = useState(0);
-
+function Timer({ start, seconds, setSeconds }) {
   useEffect(() => {
     if (start) {
       const interval = setInterval(() => {
@@ -16,7 +15,7 @@ function Timer({ start }) {
   const remainingSeconds = seconds % 60;
 
   return (
-    <div>
+    <div className="timer">
       <h2>
         {`${minutes.toString().padStart(2, "0")}:${remainingSeconds
           .toString()

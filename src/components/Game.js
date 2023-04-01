@@ -14,25 +14,48 @@ import {
 
 import imageMapResizerMin from "image-map-resizer";
 
-function Game({setGameLoaded}) {
-
+function Game({ setGameLoaded, seconds }) {
   const [dropdownVisibility, setDropdownVisibility] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ x: 0, y: 0 });
-  const [zWarriorId, setzWarriorId] = useState("");
+  const [zWarriorId, setZWarriorID] = useState("");
   const [selectionResultCorrect, setSelectionResultCorrect] =
     useState("no-selection");
   const [selectionResultIncorrect, setSelectionResultIncorrect] =
     useState("no-selection");
+  const [endGame, setEndGame] = useState(false)
 
-    useEffect(() => {
-      setGameLoaded(true);
-    }, []);
+  const [randomWarriors, setRandomWarriors] = useState([
+    { warrior: "songoku", name: "Son Goku" },
+    { warrior: "kingcold", name: "King Cold" },
+    { warrior: "android19", name: "Android 19" },
+    { warrior: "mechafrieza", name: "Mecha Frieza" },
+    { warrior: "futuretrunks", name: "Future Trunks" },
+    { warrior: "piccolo", name: "Piccolo" },
+    { warrior: "cell", name: "Cell" },
+    { warrior: "krilin", name: "Krillin" },
+    { warrior: "chiaotzu", name: "Chiaotzu" },
+    { warrior: "yamcha", name: "Yamcha" },
+    { warrior: "tien", name: "Tien" },
+    { warrior: "vegeta", name: "Vegeta" },
+    { warrior: "android16", name: "Android 16" },
+    { warrior: "android17", name: "Android 17" },
+    { warrior: "android18", name: "Android 18" },
+    { warrior: "android20", name: "Android 20" },
+    { warrior: "songohan", name: "Son Gohan" },
+    { warrior: "celljr1", name: "Cell Jr. #1" },
+  ]);
 
-    useEffect(() => {
-      return () => {
-        setGameLoaded(false);
-      }
-    }, []);
+  // START THE TIMER WHEN THE COMPONENT MOUNTS
+  useEffect(() => {
+    setGameLoaded(true);
+  }, []);
+
+  // STOP THE TIMER WHEN THE COMPONENT UN-MOUNTS
+  useEffect(() => {
+    return () => {
+      setGameLoaded(false);
+    };
+  }, []);
 
   useEffect(() => {
     import("image-map-resizer").then((module) => module.default());
@@ -45,7 +68,7 @@ function Game({setGameLoaded}) {
     const z_warrior_id = clickedElement.getAttribute("data-z-warrior");
     console.log("warrior selected: " + z_warrior_id);
     console.log("Clicked area coordinates:", coords);
-    setzWarriorId(z_warrior_id);
+    setZWarriorID(z_warrior_id);
 
     const rect = clickedElement.getBoundingClientRect();
     const dropdownX = event.clientX - rect.left;
@@ -61,6 +84,21 @@ function Game({setGameLoaded}) {
     if (docSnap.exists()) {
       if (docSnap.data().id === zWarriorId) {
         setSelectionResultCorrect("user-selection-correct");
+
+        const removeWarrior = () => {
+          setRandomWarriors((current) =>
+            current.filter((warrior) => warrior.warrior !== selectedValue)
+          );
+        };
+
+        const docRef = await addDoc(collection(db, "user-selection"), {
+          value: selectedValue,
+          coords: zWarriorId,
+          createdAt: serverTimestamp(),
+        });
+
+        removeWarrior();
+        announceGameWInner()
       } else {
         setSelectionResultIncorrect("user-selection-incorrect");
       }
@@ -69,21 +107,26 @@ function Game({setGameLoaded}) {
       console.log("No such document!");
     }
 
-    const docRef = await addDoc(collection(db, "user-selection"), {
-      value: selectedValue,
-      coords: zWarriorId,
-      createdAt: serverTimestamp(),
-    });
-
     setTimeout(() => {
       setSelectionResultCorrect("no-selection");
       setSelectionResultIncorrect("no-selection");
-    }, 3000);
+    }, 1500);
+  }
+
+
+  const announceGameWInner = () =>{
+
+    
+    const charactersLeft = randomWarriors.length
+    console.log(charactersLeft)
+    if(charactersLeft===0){
+      setGameLoaded(false)
+      console.log("You Won!")
+    }
   }
 
   return (
     <div className="game-wrapper">
-      
       <div className={selectionResultCorrect}>
         Correct!
         <span className="material-symbols-outlined selection-icon">
@@ -249,6 +292,14 @@ function Game({setGameLoaded}) {
           data-z-warrior="FzNTEt3OlztXqwmu/1i7vA=="
           onClick={getDropdownCoordinates}
         />
+
+        <area
+          alt="random z warrior to guess"
+          coords="284,580,386,678"
+          shape="rect"
+          data-z-warrior="/XVrhk767pEDepQZbLze8g=="
+          onClick={getDropdownCoordinates}
+        />
       </map>
 
       {dropdownVisibility && (
@@ -256,6 +307,7 @@ function Game({setGameLoaded}) {
           clickPosition={dropdownPosition}
           zWarriorId={zWarriorId}
           submitData={submitData}
+          randomWarriors={randomWarriors}
         />
       )}
     </div>

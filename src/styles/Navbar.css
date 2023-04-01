@@ -2,8 +2,9 @@
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
-	font-family: 'Lato', sans-serif;
+    font-family: 'PT Sans Narrow', sans-serif;
 	font-weight: bold;
+	
 }
 
 /* #010C80 */
@@ -11,7 +12,7 @@
 	--mainColor: #FFFFFF;
 	--mainColorLight: #5767aa;
 	--secondaryColor: #db2b39;
-	--textColor: #010C80;
+	--textColor: black;
 }
 
 header .nav-btn {
@@ -22,6 +23,7 @@ header .nav-btn {
 	color: var(--textColor);
 	visibility: hidden;
 	opacity: 0;
+	
 }
 
 /* Small screens (up to 599px) */
@@ -47,6 +49,7 @@ header .nav-btn {
 		padding: 0 1rem;
 		background-color: var(--mainColor);
 		color: var(--textColor);
+		
 	}
 
 	header nav {
@@ -182,10 +185,9 @@ header .nav-btn {
 		justify-content: space-between;
 		height: 10vh;
 		padding: 0 2rem;
-		background-color: var(--mainColor);
-		color: var(--textColor);
 		box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-
+		background: rgb(255,165,0);
+		background: radial-gradient(circle, rgba(255,165,0,1) 0%, rgba(255,0,0,1) 100%);
 	}
 
 	nav a {
@@ -193,6 +195,7 @@ header .nav-btn {
 		color: var(--textColor);
 		text-decoration: none;
 		font-size: 1.5rem;
+		color: white;
 	}
 
 	nav a:hover {

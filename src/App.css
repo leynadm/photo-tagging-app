@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=PT+Sans+Narrow&display=swap');
+
 .App{
+    font-family: 'DM Sans', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
