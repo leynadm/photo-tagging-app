@@ -4,6 +4,9 @@ import "../styles/Game.css";
 import Dropdown from "./Dropdown";
 import firebase from "../config/firebase";
 import { db } from "../config/firebase";
+import SelectionResult from "./SelectionResult";
+import ShowWinner from "./ShowWinner";
+import NameToBoard from "./NameToBoard"
 import {
   collection,
   addDoc,
@@ -22,7 +25,12 @@ function Game({ setGameLoaded, seconds }) {
     useState("no-selection");
   const [selectionResultIncorrect, setSelectionResultIncorrect] =
     useState("no-selection");
+  const [showWinner, setShowWinner] =
+    useState("no-selection");
+  const [totalTime, setTotalTime] = useState(0)
+  
   const [endGame, setEndGame] = useState(false)
+  const [showNameField, setShowNameField] = useState("no-selection")
 
   const [randomWarriors, setRandomWarriors] = useState([
     { warrior: "songoku", name: "Son Goku" },
@@ -78,10 +86,12 @@ function Game({ setGameLoaded, seconds }) {
   };
 
   async function submitData(selectedValue, zWarriorId) {
+    
     const pullDocRef = doc(db, "coordinates", selectedValue);
     const docSnap = await getDoc(pullDocRef);
 
     if (docSnap.exists()) {
+
       if (docSnap.data().id === zWarriorId) {
         setSelectionResultCorrect("user-selection-correct");
 
@@ -98,7 +108,7 @@ function Game({ setGameLoaded, seconds }) {
         });
 
         removeWarrior();
-        announceGameWInner()
+        await announceGameWInner()
       } else {
         setSelectionResultIncorrect("user-selection-incorrect");
       }
@@ -113,32 +123,31 @@ function Game({ setGameLoaded, seconds }) {
     }, 1500);
   }
 
-
   const announceGameWInner = () =>{
 
-    
     const charactersLeft = randomWarriors.length
     console.log(charactersLeft)
-    if(charactersLeft===0){
+    if(charactersLeft===1){
+      setShowWinner("announce-winner")
       setGameLoaded(false)
-      console.log("You Won!")
+      setShowNameField("show-name-field")
+
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;    
+
+      setTotalTime(`${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`)
+      
     }
+
   }
 
   return (
     <div className="game-wrapper">
-      <div className={selectionResultCorrect}>
-        Correct!
-        <span className="material-symbols-outlined selection-icon">
-          verified
-        </span>
-      </div>
-      <div className={selectionResultIncorrect}>
-        Try again!
-        <span className="material-symbols-outlined selection-icon">
-          dangerous
-        </span>
-      </div>
+
+    <SelectionResult selectionResultCorrect={selectionResultCorrect} selectionResultIncorrect={selectionResultIncorrect} />
+    <ShowWinner showWinner={showWinner} totalTime={totalTime} />
+
+    <NameToBoard showNameField={showNameField} seconds={seconds} totalTime={totalTime} setShowNameField={setShowNameField}/>
 
       <img
         className="game-image"
@@ -310,6 +319,7 @@ function Game({ setGameLoaded, seconds }) {
           randomWarriors={randomWarriors}
         />
       )}
+
     </div>
   );
 }

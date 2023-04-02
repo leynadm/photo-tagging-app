@@ -1,0 +1,27 @@
+.announce-winner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+    color: green;
+    background-color: white;
+    margin: 0.5rem;
+    border-radius: 0.5rem;
+}
+.no-selection{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem;
+}
+
+.selection-icon{
+    padding-left: 0.25rem;
+}

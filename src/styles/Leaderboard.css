@@ -1,0 +1,10 @@
+.leaderboard-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 10vh);
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-family: 'Lato', sans-serif;
+}
