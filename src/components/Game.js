@@ -6,7 +6,7 @@ import firebase from "../config/firebase";
 import { db } from "../config/firebase";
 import SelectionResult from "./SelectionResult";
 import ShowWinner from "./ShowWinner";
-import NameToBoard from "./NameToBoard"
+import NameToBoard from "./NameToBoard";
 import {
   collection,
   addDoc,
@@ -17,7 +17,7 @@ import {
 
 import imageMapResizerMin from "image-map-resizer";
 
-function Game({ setGameLoaded, seconds }) {
+function Game({ setGameLoaded, seconds, start, setStart, setSeconds }) {
   const [dropdownVisibility, setDropdownVisibility] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ x: 0, y: 0 });
   const [zWarriorId, setZWarriorID] = useState("");
@@ -25,12 +25,11 @@ function Game({ setGameLoaded, seconds }) {
     useState("no-selection");
   const [selectionResultIncorrect, setSelectionResultIncorrect] =
     useState("no-selection");
-  const [showWinner, setShowWinner] =
-    useState("no-selection");
-  const [totalTime, setTotalTime] = useState(0)
-  
-  const [endGame, setEndGame] = useState(false)
-  const [showNameField, setShowNameField] = useState("no-selection")
+  const [showWinner, setShowWinner] = useState("no-selection");
+  const [totalTime, setTotalTime] = useState(0);
+
+  const [endGame, setEndGame] = useState(false);
+  const [showNameField, setShowNameField] = useState("no-selection");
 
   const [randomWarriors, setRandomWarriors] = useState([
     { warrior: "songoku", name: "Son Goku" },
@@ -56,12 +55,15 @@ function Game({ setGameLoaded, seconds }) {
   // START THE TIMER WHEN THE COMPONENT MOUNTS
   useEffect(() => {
     setGameLoaded(true);
+    setStart(true);
   }, []);
 
-  // STOP THE TIMER WHEN THE COMPONENT UN-MOUNTS
   useEffect(() => {
     return () => {
       setGameLoaded(false);
+      setStart(false);
+      setSeconds(0);
+      console.log("works unmount: " + start);
     };
   }, []);
 
@@ -72,10 +74,7 @@ function Game({ setGameLoaded, seconds }) {
   const getDropdownCoordinates = (event) => {
     const clickedElement = event.target;
 
-    const coords = clickedElement.getAttribute("coords");
     const z_warrior_id = clickedElement.getAttribute("data-z-warrior");
-    console.log("warrior selected: " + z_warrior_id);
-    console.log("Clicked area coordinates:", coords);
     setZWarriorID(z_warrior_id);
 
     const rect = clickedElement.getBoundingClientRect();
@@ -86,12 +85,10 @@ function Game({ setGameLoaded, seconds }) {
   };
 
   async function submitData(selectedValue, zWarriorId) {
-    
     const pullDocRef = doc(db, "coordinates", selectedValue);
     const docSnap = await getDoc(pullDocRef);
 
     if (docSnap.exists()) {
-
       if (docSnap.data().id === zWarriorId) {
         setSelectionResultCorrect("user-selection-correct");
 
@@ -108,7 +105,7 @@ function Game({ setGameLoaded, seconds }) {
         });
 
         removeWarrior();
-        await announceGameWInner()
+        await announceGameWInner();
       } else {
         setSelectionResultIncorrect("user-selection-incorrect");
       }
@@ -123,31 +120,41 @@ function Game({ setGameLoaded, seconds }) {
     }, 1500);
   }
 
-  const announceGameWInner = () =>{
+  const announceGameWInner = () => {
+    const charactersLeft = randomWarriors.length;
+    console.log(charactersLeft);
+    if (charactersLeft === 1) {
+      setEndGame(true);
+      setGameLoaded(false);
+      setShowWinner("announce-winner");
+      setShowNameField("show-name-field");
 
-    const charactersLeft = randomWarriors.length
-    console.log(charactersLeft)
-    if(charactersLeft===1){
-      setShowWinner("announce-winner")
-      setGameLoaded(false)
-      setShowNameField("show-name-field")
+      const minutes = Math.floor(seconds / 6000); // 1 minute = 6000ms
+      const remainingSeconds = Math.floor((seconds % 6000) / 100); // remaining seconds
+      const remainingMs = seconds % 100; // remaining milliseconds
 
-      const minutes = Math.floor(seconds / 60);
-      const remainingSeconds = seconds % 60;    
-
-      setTotalTime(`${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`)
-      
+      setTotalTime(
+        `${minutes.toString().padStart(2, "0")}:${remainingSeconds
+          .toString()
+          .padStart(2, "0")}:${remainingMs.toString().padStart(2, "0")}`
+      );
     }
-
-  }
+  };
 
   return (
     <div className="game-wrapper">
+      <SelectionResult
+        selectionResultCorrect={selectionResultCorrect}
+        selectionResultIncorrect={selectionResultIncorrect}
+      />
+      <ShowWinner showWinner={showWinner} totalTime={totalTime} />
 
-    <SelectionResult selectionResultCorrect={selectionResultCorrect} selectionResultIncorrect={selectionResultIncorrect} />
-    <ShowWinner showWinner={showWinner} totalTime={totalTime} />
-
-    <NameToBoard showNameField={showNameField} seconds={seconds} totalTime={totalTime} setShowNameField={setShowNameField}/>
+      <NameToBoard
+        showNameField={showNameField}
+        seconds={seconds}
+        totalTime={totalTime}
+        setShowNameField={setShowNameField}
+      />
 
       <img
         className="game-image"
@@ -319,7 +326,6 @@ function Game({ setGameLoaded, seconds }) {
           randomWarriors={randomWarriors}
         />
       )}
-
     </div>
   );
 }

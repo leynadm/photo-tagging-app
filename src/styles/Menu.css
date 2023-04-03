@@ -13,6 +13,18 @@
     width: 25rem;
 }
 
+.level-instructions{
+  font-weight: 100;
+  font-style: italic;
+  padding: 0.25rem;
+  text-align: center;
+}
+
+.upper-menu-tile{
+  display: flex;
+  flex-direction: column;
+}
+
 .menu-tile{
     display: flex;
     flex-direction: column;
@@ -20,6 +32,7 @@
     align-items: center;
     box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
     margin: 0.5rem;
+    border-radius: 0.5rem;
 }
 
 

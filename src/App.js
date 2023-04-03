@@ -10,8 +10,8 @@ import Leaderboard from "./components/Leaderboard";
 
 function App() {
   const [gameLoaded, setGameLoaded] = useState(false);
-  //const [timer, setTimer] = useState(0)
   const [seconds, setSeconds] = useState(0);
+  const [start, setStart] = useState(false)
 
   return (
     <div className="App">
@@ -20,6 +20,8 @@ function App() {
           gameLoaded={gameLoaded}
           seconds={seconds}
           setSeconds={setSeconds}
+          start={start}
+          setStart={setStart}
         />
         <Routes>
           <Route path="/" element={<Menu />} />
@@ -27,7 +29,7 @@ function App() {
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route
             path="/game"
-            element={<Game setGameLoaded={setGameLoaded} seconds={seconds} />}
+            element={<Game start={start} setStart={setStart} setGameLoaded={setGameLoaded} seconds={seconds} setSeconds={setSeconds} />}
           />
         </Routes>
       </Router>

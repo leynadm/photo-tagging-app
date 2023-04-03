@@ -24,7 +24,7 @@ function NameToBoard({ showNameField, seconds, totalTime, setShowNameField}) {
     <div className={showNameField}>
       <div>You can add your record to the leaderboard: </div>
       
-      <label for="inp" className="inp" >
+      <label htmlFor="inp" className="inp" >
         <input
           id="inp"
           placeholder="&nbsp;"
@@ -33,8 +33,8 @@ function NameToBoard({ showNameField, seconds, totalTime, setShowNameField}) {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <span class="label">Add Your Name</span>
-        <span class="focus-bg"></span>
+        <span className="label">Add Your Name</span>
+        <span className="focus-bg"></span>
       </label>
 
       <button
