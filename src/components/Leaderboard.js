@@ -41,8 +41,8 @@ function Leaderboard() {
       <thead>
         <tr>
           <th>Position</th>
-          <th>Name</th>
-          <th>Time</th>
+          <th>Player Name</th>
+          <th>mm:ss:ms</th>
           <th>Date</th>
         </tr>
         </thead>

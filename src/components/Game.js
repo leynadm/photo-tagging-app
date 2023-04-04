@@ -7,12 +7,14 @@ import { db } from "../config/firebase";
 import SelectionResult from "./SelectionResult";
 import ShowWinner from "./ShowWinner";
 import NameToBoard from "./NameToBoard";
+import ShowError from "./ShowError";
 import {
   collection,
   addDoc,
   serverTimestamp,
   doc,
   getDoc,
+  and,
 } from "firebase/firestore";
 
 import imageMapResizerMin from "image-map-resizer";
@@ -27,6 +29,7 @@ function Game({ setGameLoaded, seconds, start, setStart, setSeconds }) {
     useState("no-selection");
   const [showWinner, setShowWinner] = useState("no-selection");
   const [totalTime, setTotalTime] = useState(0);
+  const [showError, setShowError] = useState("no-selection");
 
   const [endGame, setEndGame] = useState(false);
   const [showNameField, setShowNameField] = useState("no-selection");
@@ -85,10 +88,11 @@ function Game({ setGameLoaded, seconds, start, setStart, setSeconds }) {
   };
 
   async function submitData(selectedValue, zWarriorId) {
+    
     const pullDocRef = doc(db, "coordinates", selectedValue);
     const docSnap = await getDoc(pullDocRef);
 
-    if (docSnap.exists()) {
+    if (docSnap.exists() && zWarriorId !== null ) {
       if (docSnap.data().id === zWarriorId) {
         setSelectionResultCorrect("user-selection-correct");
 
@@ -100,23 +104,25 @@ function Game({ setGameLoaded, seconds, start, setStart, setSeconds }) {
 
         const docRef = await addDoc(collection(db, "user-selection"), {
           value: selectedValue,
-          coords: zWarriorId,
+          z_warrior_id: zWarriorId,
           createdAt: serverTimestamp(),
         });
 
         removeWarrior();
         await announceGameWInner();
       } else {
+
+
         setSelectionResultIncorrect("user-selection-incorrect");
       }
     } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
+      setShowError("show-error");
     }
 
     setTimeout(() => {
       setSelectionResultCorrect("no-selection");
       setSelectionResultIncorrect("no-selection");
+      setShowError("no-selection");
     }, 1500);
   }
 
@@ -148,7 +154,7 @@ function Game({ setGameLoaded, seconds, start, setStart, setSeconds }) {
         selectionResultIncorrect={selectionResultIncorrect}
       />
       <ShowWinner showWinner={showWinner} totalTime={totalTime} />
-
+      <ShowError showError={showError} />
       <NameToBoard
         showNameField={showNameField}
         seconds={seconds}
