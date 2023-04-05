@@ -7,6 +7,7 @@ import Home from "../src/components/Home";
 import Menu from "./components/Menu";
 import Game from "./components/Game";
 import Leaderboard from "./components/Leaderboard";
+import GameLevel02 from "./components/GameLevel02";
 
 function App() {
   const [gameLoaded, setGameLoaded] = useState(false);
@@ -30,6 +31,10 @@ function App() {
           <Route
             path="/game"
             element={<Game start={start} setStart={setStart} setGameLoaded={setGameLoaded} seconds={seconds} setSeconds={setSeconds} />}
+          />
+          <Route
+            path="/gamelevel02"
+            element={<GameLevel02 start={start} setStart={setStart} setGameLoaded={setGameLoaded} seconds={seconds} setSeconds={setSeconds} />}
           />
         </Routes>
       </Router>

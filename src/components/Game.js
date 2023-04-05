@@ -13,8 +13,7 @@ import {
   addDoc,
   serverTimestamp,
   doc,
-  getDoc,
-  and,
+  getDoc
 } from "firebase/firestore";
 
 import imageMapResizerMin from "image-map-resizer";

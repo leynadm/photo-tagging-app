@@ -14,7 +14,7 @@ function Menu() {
 
   const handleLevel02Click = () => {
     // navigate to the game component
-    navigate("/game");
+    navigate("/gamelevel02");
   };
 
   const handleLevel03Click = () => {
