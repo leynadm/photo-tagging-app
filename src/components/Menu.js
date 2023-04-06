@@ -31,7 +31,7 @@ function Menu() {
             type="button"
             onClick={handleLevel01Click}
           >
-            Select Level 01
+            Label All Z Warriors!
           </button>
         </div>
         <div className="level-instructions">
@@ -40,36 +40,20 @@ function Menu() {
         </div>
       </div>
 
-    <div>
-      <div className="menu-tile">
-        <img className="level-image" src={imgLevelBlur02} alt="level 2"></img>
-        <button
-          className="menu-button"
-          type="button"
-          onClick={handleLevel02Click}
-        >
-          Select Level 02
-        </button>
-      </div>
-      <div className="level-instructions">
-          Find the Z warrior prompted to you as quickly as you can!<br></br>Make sure to click
-          on their head in order for your selection to count.
-        </div>
-      </div>
       <div>
-      <div className="menu-tile">
-        <img className="level-image" src={imgLevelBlur03} alt="level 3"></img>
-        <button
-          className="menu-button"
-          type="button"
-          onClick={handleLevel03Click}
-        >
-          Select Level 03
-        </button>
-      </div>
-      <div className="level-instructions">
-          The same as level 2 but harder!<br></br>Make sure to click
-          on their head in order for your selection to count.
+        <div className="menu-tile">
+          <img className="level-image" src={imgLevelBlur02} alt="level 2"></img>
+          <button
+            className="menu-button"
+            type="button"
+            onClick={handleLevel02Click}
+          >
+            Find The Z Warrior!
+          </button>
+        </div>
+        <div className="level-instructions">
+          Find the Z warrior prompted to you as quickly as you can!<br></br>Make
+          sure to click on their head in order for your selection to count.
         </div>
       </div>
     </div>

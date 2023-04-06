@@ -3,7 +3,7 @@
 .menu-wrapper{
     height: calc(100vh - 10vh);
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     justify-content: center;
     align-content: center;
     justify-content: space-between;
