@@ -159,10 +159,11 @@ function Game({ setGameLoaded, seconds, start, setStart, setSeconds }) {
         seconds={seconds}
         totalTime={totalTime}
         setShowNameField={setShowNameField}
+        leaderboardName={"leaderboard"}
       />
 
       <img
-        className="game-image"
+        className="game-image-level-01"
         src={imgLevel01}
         alt="level 1"
         useMap="#image-map"

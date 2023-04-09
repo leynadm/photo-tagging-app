@@ -16,7 +16,30 @@
     padding: 0.5rem;
 }
 
+.table-wrappers{
+    display: flex;
+    gap: 1rem;
+}
+
+.table-header{
+    text-align: center;
+    margin: 0;    
+    height: auto;
+    background-color: #55608f;
+    color: white;
+}
+
+.table-header-column-names{
+    background-color: #55608f;
+}
+
+.table-header-column-names th{
+    color: white;
+}
+
 table {
+    margin-bottom: 1rem;
+    text-align: start;
     width: 800px;
     border-collapse: collapse;
     overflow: hidden;

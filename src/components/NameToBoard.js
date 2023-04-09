@@ -3,14 +3,14 @@ import { collection, addDoc,  serverTimestamp } from "firebase/firestore";
 import { db } from "../config/firebase";
 import "../styles/NameToBoard.css"
 
-function NameToBoard({ showNameField, seconds, totalTime, setShowNameField}) {
+function NameToBoard({ showNameField, seconds, totalTime, setShowNameField,leaderboardName}) {
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef(null);
-
+  
   async function submitData(seconds, totalTime) {
     const value = inputRef.current.value;
 
-    const docRef = await addDoc(collection(db, "leaderboard"), {
+    const docRef = await addDoc(collection(db, leaderboardName), {
       name: value,
       time_minutes: totalTime,
       time_seconds: seconds,

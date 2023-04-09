@@ -14,10 +14,8 @@
     outline-color: white;
 }
 
-img{
-    padding: 0.25rem;
+.game-image-level-01{
     max-width: 100%;
-    height: 100%;
-    object-fit: cover;
+    min-height: 100%;
+    background-size: cover;
 }
-
