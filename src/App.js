@@ -15,7 +15,7 @@ function App() {
 
   return (
     <div className="App">
-      <Router basename="/photo-tagging-app">
+      <Router basename="/">
         
         <Navbar
           gameLoaded={gameLoaded}
