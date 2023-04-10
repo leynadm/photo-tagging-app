@@ -3,7 +3,6 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import About from "../src/components/About";
-import Home from "../src/components/Home";
 import Menu from "./components/Menu";
 import Game from "./components/Game";
 import Leaderboard from "./components/Leaderboard";
@@ -17,6 +16,7 @@ function App() {
   return (
     <div className="App">
       <Router basename="/photo-tagging-app">
+        
         <Navbar
           gameLoaded={gameLoaded}
           seconds={seconds}
@@ -24,6 +24,7 @@ function App() {
           start={start}
           setStart={setStart}
         />
+
         <Routes>
           <Route path="/" element={<Menu />} />
           <Route path="/about" element={<About />} />
