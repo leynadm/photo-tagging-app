@@ -6,13 +6,13 @@ function About() {
   return (
     <div className="about-wrapper">
       <div>
-        This is a small project meant to validate user selection choice using a
+        This is a small project meant to validate user selection choice data using a
         backend - Firebase.
       </div>
       <br></br>
       <div>
-        While the functionality works as desired, as you can see I still need to
-        make an effort in terms of design skills. ^^
+        While the functionality works as desired, I still need to
+        make an effort in terms of page design. ^^
       </div>
 
       <br></br>
