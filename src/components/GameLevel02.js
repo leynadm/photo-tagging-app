@@ -68,10 +68,6 @@ function GameLevel02({ setGameLoaded, seconds, start, setStart, setSeconds }) {
       setStart(true);
       setGameLoaded(true);
       setFindWarriorVisibility("warrior-to-guess");
-
-      setTimeout(() => {
-        setFindWarriorVisibility("no-selection");
-      }, 6000);
     });
 
     console.log(zWarrior[rand]);
@@ -102,6 +98,7 @@ function GameLevel02({ setGameLoaded, seconds, start, setStart, setSeconds }) {
     ) {
       setStart("false");
       setGameLoaded(false);
+      setFindWarriorVisibility("no-selection");
       setShowNameField("show-name-field");
       setShowWinner("announce-winner");
 
@@ -137,7 +134,7 @@ function GameLevel02({ setGameLoaded, seconds, start, setStart, setSeconds }) {
       />
 
       <img
-        className="game-image"
+        className="game-image-level02"
         src={imgLevel02}
         alt="level 2"
         onClick={getDropdownCoordinates}

@@ -1,0 +1,29 @@
+.about-wrapper{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 10vh);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-family: 'Lato', sans-serif;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.5rem;
+    padding: 1rem;
+}
+
+.contact-container{
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.social-media-icon{
+    width: 2rem;
+}
+
+a{
+text-decoration: none;
+}

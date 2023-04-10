@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="App">
-      <Router basename="/">
+      <Router basename="/photo-tagging-app">
         <Navbar
           gameLoaded={gameLoaded}
           seconds={seconds}

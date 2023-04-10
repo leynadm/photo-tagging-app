@@ -16,6 +16,6 @@
 
 .game-image-level-01{
     max-width: 100%;
-    min-height: 100%;
-    background-size: cover;
+    height: 100%;
+    background-size: contain;
 }
