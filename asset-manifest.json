@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/photo-tagging-app/static/css/main.46d40864.css",
-    "main.js": "/photo-tagging-app/static/js/main.e3feeb2e.js",
+    "main.js": "/photo-tagging-app/static/js/main.749e7093.js",
     "static/js/787.6eec3de1.chunk.js": "/photo-tagging-app/static/js/787.6eec3de1.chunk.js",
     "static/media/level-02-blur.png": "/photo-tagging-app/static/media/level-02-blur.433d2a37e7d1b5659402.png",
     "static/media/level-01-blur.png": "/photo-tagging-app/static/media/level-01-blur.2efdefc91acd1208d51d.png",
@@ -10,11 +10,11 @@
     "static/media/level-01.jpg": "/photo-tagging-app/static/media/level-01.1caf4def8cadb401ab38.jpg",
     "index.html": "/photo-tagging-app/index.html",
     "main.46d40864.css.map": "/photo-tagging-app/static/css/main.46d40864.css.map",
-    "main.e3feeb2e.js.map": "/photo-tagging-app/static/js/main.e3feeb2e.js.map",
+    "main.749e7093.js.map": "/photo-tagging-app/static/js/main.749e7093.js.map",
     "787.6eec3de1.chunk.js.map": "/photo-tagging-app/static/js/787.6eec3de1.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.46d40864.css",
-    "static/js/main.e3feeb2e.js"
+    "static/js/main.749e7093.js"
   ]
 }
